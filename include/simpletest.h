@@ -1,5 +1,5 @@
 /*
- * SimpleTest v0.0.0 - test and assertion macros
+ * SimpleTest 0.0.1 - test and assertion macros
  *
  * Copyright (c) 2013 Kramer Campbell
  *
@@ -58,10 +58,10 @@ typedef enum {
   }
 
 #define ASSERT_NULL(test) \
-  if (variable != NULL) { \
+  if (test != NULL) { \
     *assertion_error = ASSERT_NULL_FAIL; \
     fprintf(stderr, "%s: Expected %s to be null (%s:%d)\n", \
-      __func__, #variable, __FILE__, __LINE__); \
+      __func__, #test, __FILE__, __LINE__); \
     return; \
   }
 
