@@ -142,23 +142,52 @@ Currently, there are only a few assertions available. These assertions are simil
 
 ### CMake
 
-To add the `test` make target with CMake, follow these instructions. The instructions given here assume your tests are in `test/` and is directly under the root of your project. These instructions don't make use of CMake's testing commands as those are more geared towards CTest.
+It is possible to add the `test` make target with CMake and have it work with SimpleTest. It is best not to use CMake's testing commands as those are more geared towards CTest.
 
-Add to `CMakeLists.txt` in your project root:
+If you're creating an executable, an object library target can be used in order to avoid compiling your main source files twice.
+
+To do so, consider this example:
+
+```cmake
+add_library(myproject_obj OBJECT
+  # Do not include the source file containing the entry point.
+  src/file1.c
+  src/file2.c
+)
+add_executable(myproject $<TARGET_OBJECTS:myproject_obj> src/main.c)
+```
+
+The source file containing the entry point (`main`) is only provided to the executable. If it was compiled into the object library, it would result in a linking error regarding duplicate symbols when compiling the test source files as the tests have their own entry point. If you are unit testing functions that are inside the source file that contains the entry point, consider moving them outside of that source file.
+
+Assuming that your test source files are in `test/`, you will want to tell CMake to add the `test/` subdirectory.
 
 ```cmake
 add_subdirectory(test)
 ```
 
-Create `CMakeLists.txt` in `test/` with the following:
+Then inside `test/`, create a `CMakeLists.txt` file that provides targets for your tests. If you're building an executable, the object library will be referenced here as well. The test executable name cannot be the same name as the custom `test` target.
 
-```cmake
-# Grab every source file in this directory.
-file(GLOB_RECURSE test_SOURCES "*.c")
+#### Examples
 
-# Compile to an executable target named 'project_test'
-add_executable(project_test ${test_SOURCES})
+* For executables:
 
-# Create a custom target named 'test' that runs the executable target 'project_test'
-add_custom_target(test "${CMAKE_BINARY_DIR}/test/project_test")
-```
+  ```cmake
+  add_executable(myproject_test $<TARGET_OBJECTS:myproject_obj>
+    test_main.c
+    test1.c
+    test2.c
+  )
+  add_custom_target(test "${CMAKE_BINARY_DIR}/test/myproject_test" DEPENDS myproject_test)
+  ```
+
+* For libraries:
+
+  ```cmake
+  add_executable(myproject_test
+    test_main.c
+    test1.c
+    test2.c
+  )
+  target_link_libraries(myproject_test myproject)
+  add_custom_target(test "${CMAKE_BINARY_DIR}/test/project_test" DEPENDS myproject_test)
+  ```
