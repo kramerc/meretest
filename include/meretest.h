@@ -1,5 +1,5 @@
 /*
- * SimpleTest 0.0.1 - test and assertion macros
+ * MereTest 0.1.0 - test and assertion macros
  *
  * Copyright (c) 2013 Kramer Campbell
  *
@@ -23,8 +23,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef SIMPLETEST_H
-#define SIMPLETEST_H
+#ifndef MERETEST_H
+#define MERETEST_H
 
 #include <stdio.h>
 #include <stdlib.h>

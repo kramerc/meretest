@@ -1,12 +1,12 @@
-# SimpleTest
+# MereTest
 
-SimpleTest is a header file that provides test and assertion macros for C/C++. It aims to provide dead simple unit testing.
+MereTest is a header file that provides test and assertion macros for C/C++. It aims to provide dead simple unit testing.
 
 ## Installation
 
 ### System-wide
 
-To install SimpleTest system-wide on Unix-based systems, simply run the following:
+To install MereTest system-wide on Unix-based systems, simply run the following:
 
 ```
 make install
@@ -16,7 +16,7 @@ Depending on your system you may need to be root before running that command. By
 
 ### Project
 
-Simply copy [simpletest.h](include/simpletest.h) somewhere in your project. If the file is placed in a separate directory outside of the location you will be placing your test source files, configure your build system to include it for your test source files.
+Simply copy [meretest.h](include/meretest.h) somewhere in your project. If the file is placed in a separate directory outside of the location you will be placing your test source files, configure your build system to include it for your test source files.
 
 ## Usage
 
@@ -25,15 +25,15 @@ Simply copy [simpletest.h](include/simpletest.h) somewhere in your project. If t
 Create a new source file that will hold your tests and include the header file.
 
 ```c
-#include <simpletest.h>
+#include <meretest.h>
 ```
 
-Change the angular brackets to quotes if you simply placed simpletest.h along with your test source files.
+Change the angular brackets to quotes if you simply placed meretest.h along with your test source files.
 
 Then, start writing your tests using this format:
 
 ```c
-TEST(my_first_simpletest) {
+TEST(my_first_meretest) {
   int i = 0;
   int j = 0;
   ASSERT_EQUAL(i, j)
@@ -45,33 +45,33 @@ Finally, create the entry point to your tests:
 ```c
 TEST_MAIN(
   // List each test function here.
-  my_first_simpletest,
+  my_first_meretest,
   another_test
 )
 ```
 
 #### Putting it together
 
-The following is a functioning test and is all that it takes to get started with SimpleTest.
+The following is a functioning test and is all that it takes to get started with MereTest.
 
 ```c
-#include <simpletest.h>
+#include <meretest.h>
 
-TEST(my_first_simpletest) {
+TEST(my_first_meretest) {
   int i = 0;
   int j = 0;
   ASSERT_EQUAL(i, j)
 }
 
 TEST_MAIN(
-  my_first_simpletest
+  my_first_meretest
 )
 ```
 
 Compiling and running it will yield these results:
 
 ```
-Test my_first_simpletest passed!
+Test my_first_meretest passed!
 Results: 1 out of 1 test passed.
 ```
 
@@ -87,9 +87,9 @@ It is possible to have multiple test source files with only one entry point. Sim
   #ifndef SECOND_TEST_H
   #define SECOND_TEST_H
 
-  #include <simpletest.h>
+  #include <meretest.h>
 
-  TEST(my_second_simpletest);
+  TEST(my_second_meretest);
 
   #endif
   ```
@@ -99,7 +99,7 @@ It is possible to have multiple test source files with only one entry point. Sim
   ```c
   #include "second_test.h"
 
-  TEST(my_second_simpletest) {
+  TEST(my_second_meretest) {
     // Test things here.
   }
   ```
@@ -107,18 +107,18 @@ It is possible to have multiple test source files with only one entry point. Sim
 * __first_test.c__
 
   ```c
-  #include <simpletest.h> // Optional now since second_test.h provides it
+  #include <meretest.h> // Optional now since second_test.h provides it
   #include "second_test.h"
 
-  TEST(my_first_simpletest) {
+  TEST(my_first_meretest) {
     int i = 0;
     int j = 0;
     ASSERT_EQUAL(i, j)
   }
 
   TEST_MAIN(
-    my_first_simpletest,
-    my_second_simpletest
+    my_first_meretest,
+    my_second_meretest
   )
   ```
 
@@ -142,7 +142,7 @@ Currently, there are only a few assertions available. These assertions are simil
 
 ### CMake
 
-It is possible to add the `test` make target with CMake and have it work with SimpleTest. It is best not to use CMake's testing commands as those are more geared towards CTest.
+It is possible to add the `test` make target with CMake and have it work with MereTest. It is best not to use CMake's testing commands as those are more geared towards CTest.
 
 If you're creating an executable, an object library target can be used in order to avoid compiling your main source files twice.
 
