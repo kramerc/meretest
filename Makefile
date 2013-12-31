@@ -2,11 +2,11 @@ PREFIX = /usr/local
 
 # Empty 'all' target to prevent accidental installation.
 all:
-	@echo "Use 'make install' to install SimpleTest."
-	@echo "Use 'make uninstall' to uninstall SimpleTest."
+	@echo "Use 'make install' to install MereTest."
+	@echo "Use 'make uninstall' to uninstall MereTest."
 
 install:
-	install -c -m 644 include/simpletest.h $(PREFIX)/include
+	install -c -m 644 include/meretest.h $(PREFIX)/include
 
 uninstall:
-	rm -f $(PREFIX)/include/simpletest.h
+	rm -f $(PREFIX)/include/meretest.h
